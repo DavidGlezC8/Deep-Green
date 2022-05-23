@@ -59,8 +59,6 @@ start :-sleep(0.4),
 
     sintoma(Paciente,taquicardia):-verificar(Paciente," tiene taquicardia (y/n) ?").
 
-    sintoma(Paciente,estornudos):-verificar(Paciente," tiene estornudos (y/n) ?").
-
     sintoma(Paciente,cansancio):-verificar(Paciente," tiene cansancio (y/n) ?").
 
     sintoma(Paciente,sudoracion):-verificar(Paciente," tiene sudoracion (y/n) ?").
@@ -72,6 +70,8 @@ start :-sleep(0.4),
     sintoma(Paciente,dolor_muscular):-verificar(Paciente," tiene dolor_muscular (y/n) ?").
 
     sintoma(Paciente,dolor_abdominal):-verificar(Paciente," tiene dolor_abdominal (y/n) ?").
+    
+    sintoma(Paciente,inflamacion_abdominal):-verificar(Paciente," tiene inflamacion_abdominal (y/n) ?").
 
     sintoma(Paciente,dolor_estomacal):-verificar(Paciente," tiene dolor_estomacal (y/n) ?").
 
