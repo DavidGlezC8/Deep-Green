@@ -464,7 +464,7 @@ end :-
 interface(X,Y,Z) :-
 	atom_concat(Y,X, FAtom),
 	atom_concat(FAtom,Z,FinalAtom),
-	jpl_new('javax.swing.JFrame', ['Expert System'], F),
+	jpl_new('javax.swing.JFrame', ['Sistema Experto'], F),
 	jpl_new('javax.swing.JLabel',['--- SISTEMA MEDICO EXPERTO ---'],LBL),
 	jpl_new('javax.swing.JPanel',[],Pan),
 	jpl_call(Pan,add,[LBL],_),
