@@ -1,10 +1,14 @@
-%Para comenzar el sistema, escribe 'start.'
-% Deep Green
-% David Emmanuel González Cázares
-% Nuria Hernández Alás
-% Josué Doménico Chicatti Avendaño
+/* Para comenzar el sistema, escribe 'start.'
+ Deep Green
+ David Emmanuel González Cázares
+ Nuria Hernández Alás
+ Josué Doménico Chicatti Avendaño
+*/
 
+%Se invoca el módulo de jpl para usar herramientas visuales de Java en ProLog
 :- use_module(library(jpl)).
+
+%El método principal para empezar el Sistema Experto Deep Green
 start :-sleep(0.4),	
 		write('-----------------------------------------------------------------'),nl,
 		sleep(0.4),
@@ -18,6 +22,7 @@ start :-sleep(0.4),
 
 		interface2.
         
+%La base de conocimientos de distintos síntomas que existen, formulados como predicados para hacer preguntas que verifiquen si padece el síntoma
         
     sintoma(Paciente,fiebre) :- verificar(Paciente," tiene fiebre (y/n) ?").
  
@@ -123,6 +128,7 @@ start :-sleep(0.4),
 
     sintoma(Paciente,espasmos_de_cuello):-verificar(Paciente," tiene espasmos_de_cuello (y/n) ?").
 
+%Las reglas, presentadas en forma y orden de árbol de decisiones, que determinan cuál diagnóstico de enfermedad se cumple según las respuestas a los síntomas
 
     diagnostico(Paciente,david19):-
 	Paciente = 'David'.
@@ -397,10 +403,12 @@ start :-sleep(0.4),
         
 	diagnostico(_,"enfermedad. Lo lamento, no puedo detectar la posible enfermedad").
 	
+%Regla que determina el valor de la respuesta según lo que escribe el usuario en la interface
     response(Respuesta) :-
         read(Respuesta),
         write(Respuesta),nl.
 		
+%La acción que ejecuta las preguntas para el usuario del sistema
 preguntar(Paciente,Pregunta) :-
 	write(Paciente),write(', acaso'),write(Pregunta),
 	/*read(N),
@@ -418,6 +426,7 @@ preguntar(Paciente,Pregunta) :-
 	sleep(1),
     nl.
 	
+%Base de conocimientos dinámica para acertar si un síntoma es positivo con "yes" o es negativo como "no". Esto determina el valor de los síntomas para el diagnóstico
 :- dynamic yes/1,no/1.		
 	
 verificar(P,S) :-
@@ -429,11 +438,13 @@ verificar(P,S) :-
      fail ;
      preguntar(P,S))).
 	 
+%Método que borra el conocimiento de síntomas del usuario anterior
 undo :- retract(yes(_)),fail. 
 undo :- retract(no(_)),fail.
 undo.
 
 
+%Escribe el resultado final con el diagnóstico del sistema experto
 pt(Paciente):- 
 
 		diagnostico(Paciente,Enfermedad),
@@ -449,6 +460,7 @@ end :-
 		sleep(0.4),
 		write('*****************************************************************'),nl.
 
+%La interaz para hacer las preguntas de los síntomas. La variable N es la respuesta que pone el usuario para confirmar o negar el síntoma
 interface(X,Y,Z) :-
 	atom_concat(Y,X, FAtom),
 	atom_concat(FAtom,Z,FinalAtom),
@@ -468,7 +480,8 @@ interface(X,Y,Z) :-
       ->
        assert(yes(Z)) ;
        assert(no(Z)), fail).
-	   		
+	   	
+%La interfaz para determinar el nombre del usuario y comenzar la consulta
 interface2 :-
 	jpl_new('javax.swing.JFrame', ['Sistema Experto'], F),
 	jpl_new('javax.swing.JLabel',['--- SISTEMA MEDICO EXPERTO ---'],LBL),
@@ -488,6 +501,7 @@ interface2 :-
 	).
 	
 	
+%Última interfaz que se usa para cuando se obtiene el resultado de la consulta, o se cancela la consulta
 interface3(P,W1,D,W2) :-
 	atom_concat(P,W1, A),
 	atom_concat(A,D,B),
@@ -509,4 +523,5 @@ interface3(P,W1,D,W2) :-
 		;	write("")
 	).
 	
+%help. da ayuda en caso de no saber las instrucciones de uso del sistema experto
 help :- write("Para empezar el sistema experto, por favor escriba 'start.' and presione la llave de Enter").
